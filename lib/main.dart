@@ -1,9 +1,18 @@
 import 'package:flutevents/pages/vitamines.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'utils/lang/Fr.dart';
 import 'utils/Config.dart';
 
-void main() => runApp(const StartApp());
+void main() async => {
+      // Lancement de l'application avec la classe de démarrage
+      runApp(const StartApp()),
+      // Initialisation de Firebase pour récupérer les données
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      ),
+    };
 
 // Classe de démarrage, stateless parce qu'il n'y a pas d'interactions sur cette classe
 class StartApp extends StatelessWidget {

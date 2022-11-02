@@ -5,6 +5,10 @@ import 'lang/Fr.dart';
 // Créer une classe pour stocker des éléments type de configuration (UI et Data)
 abstract class ConfigWidget extends StatelessWidget {
   ConfigWidget({super.key});
+
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   // Liste des éléments du menu en bas de page
   static List<BottomNavigationBarItem> bottomListItems() {
     List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[];

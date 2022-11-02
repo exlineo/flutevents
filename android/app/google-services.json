@@ -30,6 +30,13 @@
             {
               "client_id": "988163815731-ttm58de11c908ccpihvhl5373n56mc32.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "988163815731-vsvjr4cf7ibdm9aa9o53b5eg1b2oes2a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutevents"
+              }
             }
           ]
         }
@@ -59,6 +66,13 @@
             {
               "client_id": "988163815731-ttm58de11c908ccpihvhl5373n56mc32.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "988163815731-vsvjr4cf7ibdm9aa9o53b5eg1b2oes2a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutevents"
+              }
             }
           ]
         }
