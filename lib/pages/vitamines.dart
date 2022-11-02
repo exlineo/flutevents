@@ -14,7 +14,18 @@ class VitaminesWidget extends StatefulWidget {
 }
 
 class _LoadNewsWidget extends State<VitaminesWidget> {
-  final List<String> entries = <String>['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  final List<String> entries = <String>[
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J'
+  ];
   final List<int> colorCodes = <int>[600, 500, 100];
 
   @override
@@ -24,20 +35,19 @@ class _LoadNewsWidget extends State<VitaminesWidget> {
       shrinkWrap: true,
       itemCount: entries.length,
       itemBuilder: (BuildContext context, int index) {
-        return SizedBox(
-          height: 100,
-          // color: Colors.pink[colorCodes[index]],
-          child: Row(mainAxisSize: MainAxisSize.max, children: [
-            Image.network(
-                'https://theunchained.net/wp-content/uploads/2016/05/converge2-1-678x381.jpg'),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('Entry ${entries[index]}')),
-            const Spacer(),
-            const Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Text('Le\n08\n11\n22', textAlign: TextAlign.center)),
-          ]),
+        return ListTile(
+          visualDensity: const VisualDensity(vertical: 4),
+          leading: Image.network(
+              'https://theunchained.net/wp-content/uploads/2016/05/converge2-1-678x381.jpg'),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Entry ${entries[index]}'),
+              Text('le 08/11/22'),
+            ],
+          ),
+          // trailing: Text('le\n11\n11\n22')
+          trailing: const Icon(Icons.more_vert),
         );
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(),
