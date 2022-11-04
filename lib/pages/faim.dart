@@ -3,39 +3,37 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutevents/utils/lang/Fr.dart';
 import 'package:flutevents/utils/Config.dart';
-
-import '../services/store-service.dart';
-
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Afficher des news tirées de données externes
-class VitaminesWidget extends StatefulWidget {
-  const VitaminesWidget({super.key});
-
+class FaimWidget extends StatefulWidget {
+  const FaimWidget({super.key});
   // Intégration d'un nouvel état dans le composant
   @override
-  State<VitaminesWidget> createState() => _LoadNewsWidget();
+  State<FaimWidget> createState() => _LoadNewsWidget();
 }
 
-class _LoadNewsWidget extends State<VitaminesWidget> {
-  List<Map<String, dynamic>> _events = [];
-
+class _LoadNewsWidget extends State<FaimWidget> {
+  final List<String> entries = <String>[
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J'
+  ];
   final List<int> colorCodes = <int>[600, 500, 100];
-  // Récupérer la liste des événements
-  getEvs() {
-    if (_events.isEmpty) _events = fireService.getEvs();
-    print(_events.isEmpty);
-    print(_events);
-  }
 
   @override
   Widget build(BuildContext context) {
-    // Lancer la récupération de la liste des événements
-    getEvs();
     return ListView.separated(
       // padding: const EdgeInsets.all(8),
       shrinkWrap: true,
-      itemCount: _events.length,
+      itemCount: entries.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           visualDensity: const VisualDensity(vertical: 4),
@@ -44,7 +42,7 @@ class _LoadNewsWidget extends State<VitaminesWidget> {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${_events[index]['data']['titre']}'),
+              Text('Entry ${entries[index]}'),
               Text('le 08/11/22'),
             ],
           ),

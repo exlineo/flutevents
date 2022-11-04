@@ -1,7 +1,11 @@
+import 'package:flutevents/pages/carte.dart';
+import 'package:flutevents/pages/faim.dart';
+import 'package:flutevents/pages/miam.dart';
 import 'package:flutevents/pages/vitamines.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'services/store-service.dart';
 import 'utils/lang/Fr.dart';
 import 'utils/Config.dart';
 
@@ -12,6 +16,8 @@ void main() async => {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       ),
+      // Récupérer les premières données
+      // fireService.getEvs()
     };
 
 // Classe de démarrage, stateless parce qu'il n'y a pas d'interactions sur cette classe
@@ -32,43 +38,26 @@ class StartApp extends StatelessWidget {
           fontFamily: 'Playfair Display',
           bottomAppBarColor: Colors.pink[900],
         ),
-        home: const MyStatefulWidget());
+        home: const AccueilStatefulWidget());
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+class AccueilStatefulWidget extends StatefulWidget {
+  const AccueilStatefulWidget({super.key});
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<AccueilStatefulWidget> createState() => _AccueilStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     VitaminesWidget(),
-    // Text(
-    //   'Index 0: Home',
-    //   style: optionStyle,
-    // ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Menu',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Paramètres',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4 : Infos',
-      style: optionStyle,
-    ),
+    CarteWidget(),
+    FaimWidget(),
+    MiamWidget(),
   ];
   // Evénement sur le bouton qui redéfinit une valeur (setState)
   void _onItemTapped(int index) {
@@ -81,9 +70,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-            padding: EdgeInsets.only(left: 40.0),
-            child: Center(child: Text(FR.APP))),
+        title: Row(children: [
+          Image.asset('assets/images/juice.png',
+              height: 40, width: 50, fit: BoxFit.fitHeight),
+          const Text(FR.APP),
+        ]),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
