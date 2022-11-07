@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutevents/utils/lang/Fr.dart';
-import 'package:flutevents/utils/Config.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jrestaujus/services/store-service.dart';
+import 'package:jrestaujus/utils/lang/Fr.dart';
+import 'package:jrestaujus/utils/Shared.dart';
 
 // Afficher des news tirées de données externes
 class FaimWidget extends StatefulWidget {
@@ -13,44 +13,90 @@ class FaimWidget extends StatefulWidget {
   State<FaimWidget> createState() => _LoadNewsWidget();
 }
 
-class _LoadNewsWidget extends State<FaimWidget> {
-  final List<String> entries = <String>[
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J'
-  ];
-  final List<int> colorCodes = <int>[600, 500, 100];
+class _LoadNewsWidget extends State<FaimWidget> with UtilsWidget {
+  /** Initialiser une valeur dynamique */
+  @override
+  void initState() {
+    super.initState();
+
+    // fireService.getSyncEvs().then((ev) => {
+    //       setState(() {
+    //         // _evs = ev;
+    //       })
+    //     });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      // padding: const EdgeInsets.all(8),
-      shrinkWrap: true,
-      itemCount: entries.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          visualDensity: const VisualDensity(vertical: 4),
-          leading: Image.network(
-              'https://theunchained.net/wp-content/uploads/2016/05/converge2-1-678x381.jpg'),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Entry ${entries[index]}'),
-              Text('le 08/11/22'),
-            ],
-          ),
-          // trailing: Text('le\n11\n11\n22')
-          trailing: const Icon(Icons.favorite_outline),
-        );
+    return FutureBuilder(
+      future: fireService.getFutureEvs(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        // Remplace le contenu par un loader en attendant les données
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        // Si des données sont reçues, le contenu est
+        if (snapshot.hasData) {
+          return Column(children: [
+            const ColoredBox(
+              color: Colors.pink,
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                // child: Expanded(
+                child: Center(
+                    child: Text("Montre moi des trucs",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white))),
+              ),
+              // ),
+            ),
+            Expanded(
+                child: ListView.builder(
+                    // padding: const EdgeInsets.all(8),
+                    shrinkWrap: true,
+                    itemCount: fireService.evs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.network(
+                              fireService.evs[index]['data']['media']),
+                          ListTile(
+                              // visualDensity: const VisualDensity(vertical: 4),
+                              dense: false,
+                              leading: const Icon(Icons.remove_red_eye),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      '${fireService.evs[index]['data']['titre']}',
+                                      style: styleTitre),
+                                  Text(
+                                      '${fireService.evs[index]['data']['infos']}'),
+                                ],
+                              ),
+                              subtitle: Text(
+                                  '${fireService.evs[index]['data']['date']}',
+                                  style: styleEm,
+                                  textAlign: TextAlign.right),
+                              trailing: const Icon(Icons.favorite),
+                              onTap: () {
+                                print(fireService.evs[index]);
+                              },
+                              onLongPress: () {
+                                print("Long pression");
+                              })
+                        ],
+                      );
+                    }))
+          ]);
+        }
+        // Si tout est vide
+        return logoNul;
       },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
   }
 }

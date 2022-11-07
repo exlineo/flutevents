@@ -1,5 +1,5 @@
-name: flutevents
-description: A new Flutter project.
+name: jrestaujus
+description: Des vitamines de cultures notifiées dans votre poche.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.5
   firebase_core: ^2.1.1
   cloud_firestore: ^4.0.3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

@@ -1,23 +1,26 @@
-import 'package:flutevents/pages/carte.dart';
-import 'package:flutevents/pages/faim.dart';
-import 'package:flutevents/pages/miam.dart';
-import 'package:flutevents/pages/vitamines.dart';
+import 'package:jrestaujus/pages/carte.dart';
+import 'package:jrestaujus/pages/faim.dart';
+import 'package:jrestaujus/pages/miam.dart';
+import 'package:jrestaujus/pages/vitamines.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:jrestaujus/services/store-service.dart';
 import 'firebase_options.dart';
-import 'services/store-service.dart';
+// import 'services/store-service.dart';
 import 'utils/lang/Fr.dart';
-import 'utils/Config.dart';
+import 'utils/Shared.dart';
 
 void main() async => {
-      // Lancement de l'application avec la classe de démarrage
-      runApp(const StartApp()),
+      // Assurer le démarrage de l'application pour éviter les erreurs avec Firebase
+      WidgetsFlutterBinding.ensureInitialized(),
       // Initialisation de Firebase pour récupérer les données
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       ),
       // Récupérer les premières données
-      // fireService.getEvs()
+      // fireService.getEvs(), // Récupérer les premières données de la base
+      // Lancement de l'application avec la classe de démarrage
+      runApp(const StartApp()),
     };
 
 // Classe de démarrage, stateless parce qu'il n'y a pas d'interactions sur cette classe
@@ -42,17 +45,16 @@ class StartApp extends StatelessWidget {
   }
 }
 
+/** Initialisation de l'application de démarrage */
 class AccueilStatefulWidget extends StatefulWidget {
   const AccueilStatefulWidget({super.key});
-
+  // Création d'un Widget
   @override
   State<AccueilStatefulWidget> createState() => _AccueilStatefulWidgetState();
 }
 
 class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     VitaminesWidget(),
     CarteWidget(),
@@ -83,6 +85,7 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
                 child: const Icon(Icons.more_vert),
               )),
         ],
+        backgroundColor: Colors.pink[900],
         // title: const Text(FR.APP),
         // theme: AppBarTheme(backgroundColor: Colors.pink[900],)
       ),
@@ -90,8 +93,8 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          // items: ConfigWidget.bottom,
-          items: ConfigWidget.bottomListItems(),
+          // items: SharedWidget.bottom,
+          items: SharedWidget.bottomListItems(),
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.pink[900],
           // backgroundColor: Colors.pink[900],

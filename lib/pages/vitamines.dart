@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutevents/utils/lang/Fr.dart';
-import 'package:flutevents/utils/Config.dart';
+import 'package:jrestaujus/utils/lang/Fr.dart';
+import 'package:jrestaujus/utils/Shared.dart';
 
 import '../services/store-service.dart';
 
@@ -17,42 +17,78 @@ class VitaminesWidget extends StatefulWidget {
   State<VitaminesWidget> createState() => _LoadNewsWidget();
 }
 
-class _LoadNewsWidget extends State<VitaminesWidget> {
-  List<Map<String, dynamic>> _events = [];
-
-  final List<int> colorCodes = <int>[600, 500, 100];
-  // Récupérer la liste des événements
-  getEvs() {
-    if (_events.isEmpty) _events = fireService.getEvs();
-    print(_events.isEmpty);
-    print(_events);
-  }
-
+class _LoadNewsWidget extends State<VitaminesWidget> with UtilsWidget {
   @override
   Widget build(BuildContext context) {
-    // Lancer la récupération de la liste des événements
-    getEvs();
-    return ListView.separated(
-      // padding: const EdgeInsets.all(8),
-      shrinkWrap: true,
-      itemCount: _events.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          visualDensity: const VisualDensity(vertical: 4),
-          leading: Image.network(
-              'https://theunchained.net/wp-content/uploads/2016/05/converge2-1-678x381.jpg'),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${_events[index]['data']['titre']}'),
-              Text('le 08/11/22'),
-            ],
-          ),
-          // trailing: Text('le\n11\n11\n22')
-          trailing: const Icon(Icons.favorite_outline),
-        );
+    return FutureBuilder(
+      future: fireService.getFutureEvs(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        // Remplace le contenu par un loader en attendant les données
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        // Si des données sont reçues, le contenu est
+        if (snapshot.hasData) {
+          return Column(children: [
+            const ColoredBox(
+              color: Colors.pink,
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                // child: Expanded(
+                child: Center(
+                    child: Text("Mes vitamines",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white))),
+              ),
+              // ),
+            ),
+            Expanded(
+                child: ListView.builder(
+                    // padding: const EdgeInsets.all(8),
+                    shrinkWrap: true,
+                    itemCount: fireService.evs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.network(
+                              fireService.evs[index]['data']['media']),
+                          ListTile(
+                              // visualDensity: const VisualDensity(vertical: 4),
+                              dense: false,
+                              leading: const Icon(Icons.remove_red_eye),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      '${fireService.evs[index]['data']['titre']}',
+                                      style: styleTitre),
+                                  Text(
+                                      '${fireService.evs[index]['data']['infos']}'),
+                                ],
+                              ),
+                              subtitle: Text(
+                                  '${fireService.evs[index]['data']['date']}',
+                                  style: styleEm,
+                                  textAlign: TextAlign.right),
+                              trailing: const Icon(Icons.favorite),
+                              onTap: () {
+                                print(fireService.evs[index]);
+                              },
+                              onLongPress: () {
+                                print("Long pression");
+                              })
+                        ],
+                      );
+                    }))
+          ]);
+        }
+        // Si tout est vide
+        return logoNul;
       },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
   }
 }

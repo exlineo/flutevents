@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:988163815731:android:17acea81724509aa6aa646",
         "android_client_info": {
-          "package_name": "com.example.flutevents"
+          "package_name": "com.example.jresteaujus"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "988163815731-vsvjr4cf7ibdm9aa9o53b5eg1b2oes2a.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.flutevents"
+                "bundle_id": "com.example.jresteaujus"
               }
             }
           ]
@@ -71,7 +71,7 @@
               "client_id": "988163815731-vsvjr4cf7ibdm9aa9o53b5eg1b2oes2a.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.flutevents"
+                "bundle_id": "com.example.jresteaujus"
               }
             }
           ]

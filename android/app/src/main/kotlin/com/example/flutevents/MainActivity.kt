@@ -1,4 +1,4 @@
-package com.example.flutevents
+package com.example.jresteaujus
 
 import io.flutter.embedding.android.FlutterActivity
 

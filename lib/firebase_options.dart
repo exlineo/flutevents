@@ -54,7 +54,8 @@ class DefaultFirebaseOptions {
     appId: '1:988163815731:android:17acea81724509aa6aa646',
     messagingSenderId: '988163815731',
     projectId: 'jresteaujus',
-    databaseURL: 'https://jresteaujus-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://jresteaujus-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'jresteaujus.appspot.com',
   );
 
@@ -63,9 +64,11 @@ class DefaultFirebaseOptions {
     appId: '1:988163815731:ios:4d64787c658f9cf66aa646',
     messagingSenderId: '988163815731',
     projectId: 'jresteaujus',
-    databaseURL: 'https://jresteaujus-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://jresteaujus-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'jresteaujus.appspot.com',
-    iosClientId: '988163815731-vsvjr4cf7ibdm9aa9o53b5eg1b2oes2a.apps.googleusercontent.com',
-    iosBundleId: 'com.example.flutevents',
+    iosClientId:
+        '988163815731-vsvjr4cf7ibdm9aa9o53b5eg1b2oes2a.apps.googleusercontent.com',
+    iosBundleId: 'com.example.jresteaujus',
   );
 }
