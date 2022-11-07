@@ -16,9 +16,9 @@ class FireService {
   late List<Map<String, dynamic>> org =
       []; // Liste des organismes chargés depuis Firestore
   late Map<String, dynamic> u = {}; // Compte de l'utilisateur avec ses favoris
-  Future<List<Map<String, dynamic>>> evsSync() {
-    return getEvs();
-  }
+  // Future<List<Map<String, dynamic>>> evsSync() {
+  //   return getEvs();
+  // }
 
   // Récupérer les événements depuis Firebase
   getEvs() async {
@@ -29,7 +29,7 @@ class FireService {
     return evs;
   }
 
-  /** Récupérer les données d'une manière classique */
+  /// Récupérer les données d'une manière classique
   getFireEvs() async {
     await db.collection("evenements").get().then((event) {
       evs = [];
@@ -39,7 +39,7 @@ class FireService {
     }).catchError((er) => {print(er)});
   }
 
-  /** Récupérer la liste en la syncrhonisant avec le rendu (uturBuilder) dans les pages */
+  /// Récupérer la liste en la syncrhonisant avec le rendu (uturBuilder) dans les pages
   Future<List<dynamic>> getFutureEvs() async {
     if (evs.isEmpty) {
       await db.collection("evenements").get().then((event) {
@@ -50,7 +50,6 @@ class FireService {
     }
     return evs;
   }
-  // Récupérer la liste des événements
 }
 
 // Intanciation du singleton

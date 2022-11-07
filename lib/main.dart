@@ -1,14 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:jrestaujus/pages/carte.dart';
 import 'package:jrestaujus/pages/faim.dart';
 import 'package:jrestaujus/pages/miam.dart';
 import 'package:jrestaujus/pages/vitamines.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:jrestaujus/services/store-service.dart';
+
+import 'package:jrestaujus/services/auth-service.dart';
+import 'package:jrestaujus/services/messages-service.dart';
 import 'firebase_options.dart';
-// import 'services/store-service.dart';
-import 'utils/lang/Fr.dart';
-import 'utils/Shared.dart';
+
+import 'package:jrestaujus/utils/Shared.dart';
+import 'package:jrestaujus/utils/lang/Fr.dart';
 
 void main() async => {
       // Assurer le démarrage de l'application pour éviter les erreurs avec Firebase
@@ -17,8 +21,6 @@ void main() async => {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       ),
-      // Récupérer les premières données
-      // fireService.getEvs(), // Récupérer les premières données de la base
       // Lancement de l'application avec la classe de démarrage
       runApp(const StartApp()),
     };
@@ -54,6 +56,7 @@ class AccueilStatefulWidget extends StatefulWidget {
 }
 
 class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
+  // Index de la page à afficher
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     VitaminesWidget(),
@@ -70,6 +73,14 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Récupérer la liste des permissions sur les notifications
+    if (msgService.perms == null) msgService.setPerms();
+
+    /// Vérifier la connexion de l'utisateur
+    // if (authService.auth == null)
+    authService.checkAuth();
+
+    // Afficher la page principale
     return Scaffold(
       appBar: AppBar(
         title: Row(children: [

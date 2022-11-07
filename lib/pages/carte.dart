@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:jrestaujus/services/store-service.dart';
 import 'package:jrestaujus/utils/lang/Fr.dart';
 import 'package:jrestaujus/utils/Shared.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Afficher des news tirées de données externes
 class CarteWidget extends StatefulWidget {
@@ -15,14 +14,14 @@ class CarteWidget extends StatefulWidget {
 }
 
 class _LoadNewsWidget extends State<CarteWidget> {
-  List<Map<String, dynamic>> _events = [];
+  // List<Map<String, dynamic>> _events = [];
+  // var _events = [];
 
-  final List<int> colorCodes = <int>[600, 500, 100];
   // Récupérer la liste des événements
   getEvs() {
-    if (_events.isEmpty) _events = fireService.getEvs();
-    print(_events.isEmpty);
-    print(_events);
+    // if (_events.isEmpty) _events = fireService.getEvs();
+    // print(_events.isEmpty);
+    // print(_events);
   }
 
   @override
@@ -32,7 +31,7 @@ class _LoadNewsWidget extends State<CarteWidget> {
     return ListView.separated(
       // padding: const EdgeInsets.all(8),
       shrinkWrap: true,
-      itemCount: _events.length,
+      itemCount: fireService.evs.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           visualDensity: const VisualDensity(vertical: 4),
@@ -41,7 +40,7 @@ class _LoadNewsWidget extends State<CarteWidget> {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${_events[index]['data']['titre']}'),
+              Text('${fireService.evs[index]['data']['titre']}'),
               Text('le 08/11/22'),
             ],
           ),
