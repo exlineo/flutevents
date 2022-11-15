@@ -56,6 +56,10 @@ class AccueilStatefulWidget extends StatefulWidget {
 }
 
 class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
+  final PageController controller = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
   // Index de la page à afficher
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
@@ -69,6 +73,11 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
     setState(() {
       _selectedIndex = index;
     });
+    controller.animateToPage(
+      _selectedIndex,
+      curve: Curves.linear,
+      duration: const Duration(milliseconds: 200),
+    );
   }
 
   @override
@@ -100,9 +109,16 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
         // title: const Text(FR.APP),
         // theme: AppBarTheme(backgroundColor: Colors.pink[900],)
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: PageView(
+        controller: controller,
+        onPageChanged: (index) {
+          _onItemTapped(index);
+        },
+        children: _widgetOptions,
       ),
+      // body: Center(
+      //   child: _widgetOptions.elementAt(_selectedIndex),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
           // items: SharedWidget.bottom,
           items: SharedWidget.bottomListItems(),
