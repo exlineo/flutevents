@@ -28,27 +28,43 @@ class _LoadNewsWidget extends State<CarteWidget> {
   Widget build(BuildContext context) {
     // Lancer la récupération de la liste des événements
     getEvs();
-    return ListView.separated(
-      // padding: const EdgeInsets.all(8),
-      shrinkWrap: true,
-      itemCount: fireService.evs.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          visualDensity: const VisualDensity(vertical: 4),
-          leading: Image.network(
-              'https://theunchained.net/wp-content/uploads/2016/05/converge2-1-678x381.jpg'),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${fireService.evs[index]['data']['titre']}'),
-              Text('le 08/11/22'),
-            ],
-          ),
-          // trailing: Text('le\n11\n11\n22')
-          trailing: const Icon(Icons.favorite_outline),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
-    );
+    return Column(children: [
+      const ColoredBox(
+        color: Colors.pink,
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          // child: Expanded(
+          child: Center(
+              child: Text("De quoi ai-je envie ?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white))),
+        ),
+        // ),
+      ),
+      ListView.separated(
+        // padding: const EdgeInsets.all(8),
+        shrinkWrap: true,
+        itemCount: fireService.evs.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            visualDensity: const VisualDensity(vertical: 4),
+            leading: Image.network(fireService.evs[index]['data']['media']),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${fireService.evs[index]['data']['titre']}'),
+                Text('le 08/11/22'),
+              ],
+            ),
+            // trailing: Text('le\n11\n11\n22')
+            trailing: const Icon(Icons.favorite_outline),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      )
+    ]);
   }
 }
