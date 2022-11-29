@@ -11,11 +11,11 @@ class FireService {
   // Initialisation de Firestore
   final db = FirebaseFirestore.instance;
 
-  late List<Map<String, dynamic>> evs =
+  List<Map<String, dynamic>> evs =
       []; // Liste des événements chargés depuis Firestore
-  late List<Map<String, dynamic>> org =
+  List<Map<String, dynamic>> orgs =
       []; // Liste des organismes chargés depuis Firestore
-  late Map<String, dynamic> u = {}; // Compte de l'utilisateur avec ses favoris
+  Map<String, dynamic> u = {}; // Compte de l'utilisateur avec ses favoris
   // Future<List<Map<String, dynamic>>> evsSync() {
   //   return getEvs();
   // }
@@ -49,6 +49,18 @@ class FireService {
       }).catchError((er) => {print(er)});
     }
     return evs;
+  }
+
+  /// Récupérer la liste en la syncrhonisant avec le rendu (uturBuilder) dans les pages
+  Future<List<dynamic>> getFutureOrgs() async {
+    if (evs.isEmpty) {
+      await db.collection("organismes").get().then((event) {
+        for (var doc in event.docs) {
+          orgs.add({"id": doc.id, "data": doc.data()});
+        }
+      }).catchError((er) => {print(er)});
+    }
+    return orgs;
   }
 }
 

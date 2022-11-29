@@ -6,14 +6,14 @@ import 'package:jrestaujus/utils/lang/Fr.dart';
 import 'package:jrestaujus/utils/Shared.dart';
 
 // Afficher des news tirées de données externes
-class CarteWidget extends StatefulWidget {
-  const CarteWidget({super.key});
+class ChauffeWidget extends StatefulWidget {
+  const ChauffeWidget({super.key});
   // Intégration d'un nouvel état dans le composant
   @override
-  State<CarteWidget> createState() => _LoadCarteWidget();
+  State<ChauffeWidget> createState() => _LoadChauffeWidget();
 }
 
-class _LoadCarteWidget extends State<CarteWidget> {
+class _LoadChauffeWidget extends State<ChauffeWidget> {
   // Récupérer la liste des événements
   getEvs() {
     // if (_events.isEmpty) _events = fireService.getEvs();

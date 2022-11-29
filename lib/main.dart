@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:jrestaujus/pages/carte.dart';
+import 'package:jrestaujus/pages/chauffe.dart';
 import 'package:jrestaujus/pages/faim.dart';
-import 'package:jrestaujus/pages/miam.dart';
+import 'package:jrestaujus/pages/fournisseurs.dart';
 import 'package:jrestaujus/pages/vitamines.dart';
 
 import 'package:jrestaujus/services/auth-service.dart';
@@ -64,9 +64,9 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     VitaminesWidget(),
-    CarteWidget(),
+    ChauffeWidget(),
     FaimWidget(),
-    MiamWidget(),
+    FournisseursWidget(),
   ];
   // Evénement sur le bouton qui redéfinit une valeur (setState)
   void _onItemTapped(int index) {
@@ -112,7 +112,9 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
-          _onItemTapped(index);
+          setState(() {
+            _selectedIndex = index;
+          });
         },
         children: _widgetOptions,
       ),

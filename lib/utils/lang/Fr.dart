@@ -15,27 +15,39 @@ abstract class FR {
   static const String APP_INFO =
       "Votre application pour ne plus rater un événement";
   static const String APP = "J'RESTE AU JUS";
+  static Map<String, Map<String, String>> PAGES = {
+    "vitamines": {
+      "titre": "Mes vitamines",
+      "infos": "Les événéments que j'ai choisis"
+    },
+    "chauffe": {"titre": "Ca chauffe", "infos": "Evénements à venir"},
+    "carte": {"titre": "A la carte", "infos": "Tous les événements à trier"},
+    "fournisseurs": {
+      "titre": "Fournisseurs",
+      "infos": "Ils fournissent vos événements"
+    },
+  };
   // Créer une liste de bouton de menu en bas de page
   static List<Map<String, Object>> BOTTOM_ITEMS = [
     {
       "icon": const Icon(Icons.favorite),
-      "label": "Mes vitamines",
-      "tooltip": "C'est pour bientôt"
+      "label": PAGES['chauffe']!['titre'] as String,
+      "tooltip": PAGES['chauffe']!['titre'] as String,
     },
     {
       "icon": const Icon(Icons.delivery_dining),
-      "label": "A la carte",
-      "tooltip": "Les autres évènements"
+      "label": PAGES['carte']!['titre'] as String,
+      "tooltip": PAGES['carte']!['infos'] as String,
     },
     {
       "icon": const Icon(Icons.menu_book),
-      "label": "J'ai faim",
-      "tooltip": "Ils sont tous là"
+      "label": PAGES['fournisseurs']!['titre'] as String,
+      "tooltip": PAGES['fournisseurs']!['infos'] as String,
     },
     {
       "icon": const Icon(Icons.menu),
-      "label": "Miam",
-      "tooltip": "C'est pour bientôt"
+      "label": PAGES['vitamines']!['titre'] as String,
+      "tooltip": PAGES['vitamines']!['infos'] as String,
     },
     // {
     //   "icon": const Icon(Icons.info),

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jresteaujus">
    <application
-        android:label="jresteaujus"
+        android:label="J'reste au jus"
         android:name="${applicationName}"
         android:icon="@drawable/icon">
         <activity
