@@ -53,7 +53,7 @@ class AuthService {
     if (token != _token) {
       await saveTokenToDatabase(token!);
       _token = token;
-      print("Token : ${_token}");
+      // print("Token : ${_token}");
     }
     // Any time the token refreshes, store this in the database too.
     msgService.msg.onTokenRefresh.listen(saveTokenToDatabase);
@@ -67,7 +67,7 @@ class AuthService {
         print("Utilisateur pas encore authentifié authentifié ${user}");
         setAuth();
       } else {
-        print("Utilisateur authentifié ${user}");
+        // print("Utilisateur authentifié ${user}");
       }
     });
     // Récupéré le token

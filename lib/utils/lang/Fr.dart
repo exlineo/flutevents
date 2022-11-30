@@ -15,7 +15,8 @@ abstract class FR {
   static const String APP_INFO =
       "Votre application pour ne plus rater un événement";
   static const String APP = "J'RESTE AU JUS";
-  static Map<String, Map<String, String>> PAGES = {
+  static const Map<String, String> trad = {};
+  static const Map<String, Map<String, String>> PAGES = {
     "vitamines": {
       "titre": "Mes vitamines",
       "infos": "Les événéments que j'ai choisis"
@@ -31,23 +32,23 @@ abstract class FR {
   static List<Map<String, Object>> BOTTOM_ITEMS = [
     {
       "icon": const Icon(Icons.favorite),
+      "label": PAGES['vitamines']!['titre'] as String,
+      "tooltip": PAGES['vitamines']!['infos'] as String,
+    },
+    {
+      "icon": const Icon(Icons.delivery_dining),
       "label": PAGES['chauffe']!['titre'] as String,
       "tooltip": PAGES['chauffe']!['titre'] as String,
     },
     {
-      "icon": const Icon(Icons.delivery_dining),
+      "icon": const Icon(Icons.menu_book),
       "label": PAGES['carte']!['titre'] as String,
       "tooltip": PAGES['carte']!['infos'] as String,
     },
     {
-      "icon": const Icon(Icons.menu_book),
+      "icon": const Icon(Icons.menu),
       "label": PAGES['fournisseurs']!['titre'] as String,
       "tooltip": PAGES['fournisseurs']!['infos'] as String,
-    },
-    {
-      "icon": const Icon(Icons.menu),
-      "label": PAGES['vitamines']!['titre'] as String,
-      "tooltip": PAGES['vitamines']!['infos'] as String,
     },
     // {
     //   "icon": const Icon(Icons.info),

@@ -25,7 +25,7 @@ class _LoadVitaminesWidget extends State<VitaminesWidget> with UtilsWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         // Remplace le contenu par un loader en attendant les données
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
         // Si des données sont reçues, le contenu est
         if (snapshot.hasData) {
@@ -47,7 +47,6 @@ class _LoadVitaminesWidget extends State<VitaminesWidget> with UtilsWidget {
             ),
             Expanded(
                 child: ListView.builder(
-                    // padding: const EdgeInsets.all(8),
                     shrinkWrap: true,
                     itemCount: fireService.evs.length,
                     itemBuilder: (BuildContext context, int index) {

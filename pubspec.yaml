@@ -42,6 +42,7 @@ dependencies:
   intl: ^0.17.0
   firebase_messaging: ^14.0.4
   firebase_auth: ^4.1.1
+  url_launcher: ^6.1.7
 
 # dependency_overrides:
   # firebase_core_platform_interface: 4.5.2

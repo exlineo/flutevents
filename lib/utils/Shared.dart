@@ -1,8 +1,6 @@
-import 'dart:ui';
 import 'package:jrestaujus/services/store-service.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'dart:developer';
+import 'package:url_launcher/url_launcher.dart';
 import 'lang/Fr.dart';
 
 // liste des icones disponibles : https://fontawesomeicons.com/flutter/icons
@@ -39,10 +37,12 @@ mixin UtilsWidget {
 
   TextStyle styleEm =
       const TextStyle(fontSize: 12, fontStyle: FontStyle.italic);
+  TextStyle styleSt =
+      const TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
   TextStyle styleTitre =
       const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-  TextStyle styleEntete =
-      const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+  TextStyle styleEntete = const TextStyle(
+      fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white);
 
   Widget logoNul = Center(
       child: Column(
@@ -52,4 +52,76 @@ mixin UtilsWidget {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
     ],
   ));
+  setFavoriteColor(String ev) {
+    // if (fireService.u['suivis']['evenements'] != null) {
+    if (fireService.favEvs.contains(ev) || fireService.favOrgs.contains(ev)) {
+      return Colors.pink[600];
+    }
+    // }
+    return Colors.grey[600];
+  }
+
+  setLien(var l) {
+    Uri lien = Uri(scheme: 'https', path: l);
+    // Uri lien = Uri(path: l);
+    return lien;
+  }
+
+  // Send Email
+  setMailto(var l) {
+    Uri lien = Uri(
+        scheme: 'mailto',
+        path: l,
+        query:
+            "subject=J'reste au jus mais j'ai une question&body=Bonjour... j'a une question");
+    return lien;
+  }
+
+  // laynch call
+  setCall(var l) {
+    Uri lien = Uri(scheme: 'tel', path: l);
+    return lien;
+  }
+
+  // laynch call
+  setSms(var l) {
+    Uri lien = Uri(scheme: 'sms', path: l);
+    return lien;
+  }
+
+  ouvreLien(var d) async {
+    // if (await canLaunchUrl(setLien(d))) {
+    try {
+      await launchUrl(setLien(d));
+    } catch (e) {
+      throw 'Could not launch ${setLien(d)} / ${e.toString()}';
+    }
+    // } else {
+    //   throw 'Could not launch ${setLien(d)}';
+    // }
+  }
+
+  sendEmail(var d) async {
+    if (await canLaunchUrl(setMailto(d))) {
+      await launchUrl(setMailto(d));
+    } else {
+      throw 'Could not launch ${setMailto(d)}';
+    }
+  }
+
+  sendSms(var d) async {
+    if (await canLaunchUrl(setSms(d))) {
+      await launchUrl(setSms(d));
+    } else {
+      throw 'Could not launch ${setSms(d)}';
+    }
+  }
+
+  sendCall(var d) async {
+    if (await canLaunchUrl(setCall(d))) {
+      await launchUrl(setCall(d));
+    } else {
+      throw 'Could not launch ${setCall(d)}';
+    }
+  }
 }
