@@ -14,17 +14,30 @@ class ChauffeWidget extends StatefulWidget {
 }
 
 class _LoadChauffeWidget extends State<ChauffeWidget> {
+  List<dynamic> _listeEvs = [];
+
+  @override
+  initState() {
+    _listeEvs = fireService.evs;
+  }
+
   // Récupérer la liste des événements
-  getEvs() {
-    // if (_events.isEmpty) _events = fireService.getEvs();
-    // print(_events.isEmpty);
-    // print(_events);
+  filtreEvs(String f) {
+    f = f.toLowerCase();
+    final l = fireService.evs.where((ev) {
+      if (ev['data']['titre'].toLowerCase().indexOf(f) != -1 ||
+          ev['data']['description'].toLowerCase().indexOf(f) != -1 ||
+          ev['data']['date'].toLowerCase().indexOf(f) != -1) {
+        return true;
+      }
+      return false;
+    }).toList();
+
+    setState(() => _listeEvs = l);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Lancer la récupération de la liste des événements
-    // getEvs();
     return Column(children: [
       const ColoredBox(
         color: Colors.pink,
@@ -41,18 +54,41 @@ class _LoadChauffeWidget extends State<ChauffeWidget> {
         ),
         // ),
       ),
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: TextField(
+            decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Filtrer les événements'),
+            onChanged: filtreEvs),
+      ),
       ListView.separated(
         // padding: const EdgeInsets.all(8),
         shrinkWrap: true,
-        itemCount: fireService.evs.length,
+        // itemCount: fireService.evs.length,
+        itemCount: _listeEvs.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             visualDensity: const VisualDensity(vertical: 4),
-            leading: Image.network(fireService.evs[index]['data']['media']),
+            leading: Container(
+              width: 150,
+              // height: 150,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  // image: NetworkImage(fireService.evs[index]['data']['media']),
+                  image: NetworkImage(_listeEvs[index]['data']['media']),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            // leading: SizedOverflowBox(
+            //   size: const Size(150, 150),
+            //   child: Image.network(fireService.evs[index]['data']['media']),
+            // ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${fireService.evs[index]['data']['titre']}'),
+                Text('${_listeEvs[index]['data']['titre']}'),
                 Text('le 08/11/22'),
               ],
             ),

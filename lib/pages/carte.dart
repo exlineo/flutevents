@@ -23,8 +23,6 @@ class _LoadCarteWidget extends State<CarteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Lancer la récupération de la liste des événements
-    // getEvs();
     return Column(children: [
       const ColoredBox(
         color: Colors.pink,
@@ -32,7 +30,7 @@ class _LoadCarteWidget extends State<CarteWidget> {
           padding: EdgeInsets.all(15),
           // child: Expanded(
           child: Center(
-              child: Text("De quoi ai-je envie ?",
+              child: Text("A la carte",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 24,
@@ -48,7 +46,16 @@ class _LoadCarteWidget extends State<CarteWidget> {
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             visualDensity: const VisualDensity(vertical: 4),
-            leading: Image.network(fireService.evs[index]['data']['media']),
+            leading: Container(
+              width: 150,
+              // height: 150,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(fireService.evs[index]['data']['media']),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
