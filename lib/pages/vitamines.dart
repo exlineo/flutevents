@@ -38,12 +38,13 @@ class _LoadVitaminesWidget extends State<VitaminesWidget> with UtilsWidget {
                 child: Center(
                     child: Text("Mes vitamines",
                         textAlign: TextAlign.center,
+                        //   style: styleEntete,
+                        // )),
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: Colors.white))),
               ),
-              // ),
             ),
             Expanded(
                 child: ListView.builder(

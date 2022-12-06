@@ -30,7 +30,7 @@ class _LoadCarteWidget extends State<CarteWidget> {
           padding: EdgeInsets.all(15),
           // child: Expanded(
           child: Center(
-              child: Text("A la carte",
+              child: Text("Ils sont tous là",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 24,

@@ -13,7 +13,7 @@ class ChauffeWidget extends StatefulWidget {
   State<ChauffeWidget> createState() => _LoadChauffeWidget();
 }
 
-class _LoadChauffeWidget extends State<ChauffeWidget> {
+class _LoadChauffeWidget extends State<ChauffeWidget> with UtilsWidget {
   List<dynamic> _listeEvs = [];
 
   @override
@@ -59,7 +59,7 @@ class _LoadChauffeWidget extends State<ChauffeWidget> {
         child: TextField(
             decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),
-                hintText: 'Filtrer les événements'),
+                hintText: 'Filtrer vos favoris'),
             onChanged: filtreEvs),
       ),
       ListView.separated(
@@ -81,15 +81,13 @@ class _LoadChauffeWidget extends State<ChauffeWidget> {
                 ),
               ),
             ),
-            // leading: SizedOverflowBox(
-            //   size: const Size(150, 150),
-            //   child: Image.network(fireService.evs[index]['data']['media']),
-            // ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('${_listeEvs[index]['data']['titre']}'),
-                Text('le 08/11/22'),
+                Text('le 08/11/22', style: styleMini),
+                // _listeEvs[index]['data']['type'] ?
+                setType('${_listeEvs[index]['data']['type']}')
               ],
             ),
             // trailing: Text('le\n11\n11\n22')

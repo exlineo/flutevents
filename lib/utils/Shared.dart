@@ -34,7 +34,7 @@ mixin UtilsWidget {
     // var d = DateTime.fromMillisecondsSinceEpoch(time * 1000);
     // return DateFormat('dd/MM/yyyy').format(d);
   }
-
+  TextStyle styleMini = const TextStyle(fontSize: 10);
   TextStyle styleEm =
       const TextStyle(fontSize: 12, fontStyle: FontStyle.italic);
   TextStyle styleSt =
@@ -96,9 +96,6 @@ mixin UtilsWidget {
     } catch (e) {
       throw 'Could not launch ${setLien(d)} / ${e.toString()}';
     }
-    // } else {
-    //   throw 'Could not launch ${setLien(d)}';
-    // }
   }
 
   sendEmail(var d) async {
@@ -123,5 +120,22 @@ mixin UtilsWidget {
     } else {
       throw 'Could not launch ${setCall(d)}';
     }
+  }
+
+  /// Renvoyer un cartouche avec un arrière plan jaune pour indiquer un type
+  setType(var str) {
+    if (str != null) {
+      print('${str} conteneur');
+      return Container(
+          height: 20,
+          // width:auto,
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.amber[300]),
+          child: Center(child: Text(str, style: styleMini)));
+    }
+
+    return null;
   }
 }
