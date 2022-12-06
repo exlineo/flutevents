@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:jrestaujus/pages/chauffe.dart';
 import 'package:jrestaujus/pages/faim.dart';
@@ -37,6 +38,7 @@ class StartApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: _title,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.pink[900],
           primarySwatch: Colors.pink,
@@ -47,7 +49,7 @@ class StartApp extends StatelessWidget {
   }
 }
 
-/** Initialisation de l'application de démarrage */
+/// Initialisation de l'application de démarrage
 class AccueilStatefulWidget extends StatefulWidget {
   const AccueilStatefulWidget({super.key});
   // Création d'un Widget
@@ -55,20 +57,23 @@ class AccueilStatefulWidget extends StatefulWidget {
   State<AccueilStatefulWidget> createState() => _AccueilStatefulWidgetState();
 }
 
-class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
+class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget>
+    with UtilsWidget {
   final PageController controller = PageController(
     initialPage: 0,
     keepPage: true,
   );
   // Index de la page à afficher
   int _selectedIndex = 0;
+
   static const List<Widget> _widgetOptions = <Widget>[
     VitaminesWidget(),
     ChauffeWidget(),
     FaimWidget(),
     FournisseursWidget(),
   ];
-  // Evénement sur le bouton qui redéfinit une valeur (setState)
+
+  /// Evénement sur un bouton du menu du bas qui redéfinit une valeur (setState)
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -83,31 +88,66 @@ class _AccueilStatefulWidgetState extends State<AccueilStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     // Récupérer la liste des permissions sur les notifications
-    if (msgService.perms == null) msgService.setPerms();
+    // if (msgService.perms == null) msgService.setPerms();
+    msgService.getPerms();
 
-    /// Vérifier la connexion de l'utisateur
-    // if (authService.auth == null)
+    /// Vérifier la connexion de l'utisateur et récupérer le token du téléphone
     authService.checkAuth();
 
     // Afficher la page principale
     return Scaffold(
+      // Eviter d'ouvrir les paramètres avec un glissement de doigt
+      drawerEnableOpenDragGesture: false,
       appBar: AppBar(
         title: Row(children: [
           Image.asset('assets/images/juice.png',
               height: 40, width: 50, fit: BoxFit.fitHeight),
           const Text(FR.APP),
         ]),
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(Icons.more_vert),
-              )),
+        actions: [
+          Builder(
+            builder: (BuildContext context) => Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () => Scaffold.of(context).openDrawer(),
+                  child: const Icon(Icons.more_vert),
+                )),
+          )
         ],
         backgroundColor: Colors.pink[900],
-        // title: const Text(FR.APP),
         // theme: AppBarTheme(backgroundColor: Colors.pink[900],)
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.pink,
+              ),
+              child: Center(
+                  child:
+                      Expanded(child: Image.asset('assets/images/profil.png'))),
+            ),
+            Center(child: Text('Anonymos', style: styleTitre)),
+            ListTile(
+                leading: const Icon(Icons.sms_failed),
+                title: Text('Token : ${authService.token}')),
+            ListTile(
+                leading: Switch(
+                    // Valeur actuelle du Switch
+                    value: msgService.notifs,
+                    activeColor: Colors.pinkAccent,
+                    onChanged: (bool value) {
+                      // msgService.setPerms();
+                      setState(() {
+                        msgService.notifs = value;
+                      });
+                    }),
+                title: const Text('Autoriser les notifications')),
+          ],
+        ),
       ),
       body: PageView(
         controller: controller,

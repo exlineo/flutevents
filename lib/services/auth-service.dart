@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jrestaujus/services/store-service.dart';
 import 'package:jrestaujus/services/messages-service.dart';
+// Aides sur les notifications
 // https://firebase.flutter.dev/docs/messaging/permissions
+// https://firebase.google.com/docs/cloud-messaging/flutter/client
 
 class AuthService {
   // Créer un singleton pour partager des données entre les pages et les classes
@@ -14,7 +16,7 @@ class AuthService {
   AuthService._internal();
 
   late String userId;
-  String? _token = '';
+  String? token = '';
   var auth;
 
   /// Authentifier un utilisateur
@@ -46,16 +48,16 @@ class AuthService {
 
   /// Récupérer le token et l'enregistrer dans la base de données
   Future<void> setupToken() async {
-    // Get the token each time the application loads
-    String? token = await msgService.msg.getToken();
+    // Récupérer le token au chargement de l'application
+    String? tok = await msgService.msg.getToken();
 
-    // Save the initial token to the database
-    if (token != _token) {
-      await saveTokenToDatabase(token!);
-      _token = token;
+    // Envoyer le token dans la base de données
+    if (tok != token) {
+      await saveTokenToDatabase(tok!);
+      token = tok;
       // print("Token : ${_token}");
     }
-    // Any time the token refreshes, store this in the database too.
+    // A chaque fois que le token sera réinitialisé, on le renvoie à la base
     msgService.msg.onTokenRefresh.listen(saveTokenToDatabase);
   }
 
@@ -66,8 +68,6 @@ class AuthService {
       if (user == null) {
         print("Utilisateur pas encore authentifié authentifié ${user}");
         setAuth();
-      } else {
-        // print("Utilisateur authentifié ${user}");
       }
     });
     // Récupéré le token

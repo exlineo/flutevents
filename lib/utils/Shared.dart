@@ -39,6 +39,8 @@ mixin UtilsWidget {
       const TextStyle(fontSize: 12, fontStyle: FontStyle.italic);
   TextStyle styleSt =
       const TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
+  TextStyle styleTitreBlanc = const TextStyle(
+      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white);
   TextStyle styleTitre =
       const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   TextStyle styleEntete = const TextStyle(

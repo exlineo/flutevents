@@ -15,6 +15,7 @@ abstract class FR {
   static const String APP_INFO =
       "Votre application pour ne plus rater un événement";
   static const String APP = "J'RESTE AU JUS";
+  static const copyright = "Réalisation, exlineo";
   static const Map<String, String> trad = {};
   static const Map<String, Map<String, String>> PAGES = {
     "vitamines": {
